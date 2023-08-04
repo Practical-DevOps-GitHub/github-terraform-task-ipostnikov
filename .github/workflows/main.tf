@@ -11,8 +11,9 @@ terraform {
 
 provider "github" {
   token        = "${var.PAT}"
-  organization = "${var.github_organization}"
 }
+
+
 
 # Add a collaborator to a repository
 resource "github_repository_collaborator" "a_repo_collaborator" {
