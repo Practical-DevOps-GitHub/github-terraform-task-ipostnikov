@@ -8,18 +8,27 @@ terraform {
   }
 }
 
-
 provider "github" {
-  token        = "${var.PAT}"
+  token = "${var.PAT}"
+  owner = "Practical-DevOps-GitHub"
+  repository = "github-terraform-task-ipostnikov"
+}
+
+resource "github_repository" "github-terraform-task-ipostnikov" {
+  name        = "github-terraform-task-ipostnikov"
+  visibility  = "private"
 }
 
 
-
-# Add a collaborator to a repository
-resource "github_repository_collaborator" "a_repo_collaborator" {
+resource "github_repository_collaborator" "collaborator" {
   repository = "github-terraform-task-ipostnikov"
   username   = "softservedata"
   permission = "push"
 }
 
 
+resource "github_branch_default" "default_branch" {
+  repository = github.repository
+  branch = "develop"
+
+}
