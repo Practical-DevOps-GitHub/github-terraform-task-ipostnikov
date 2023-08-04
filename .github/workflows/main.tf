@@ -17,12 +17,12 @@ provider "github" {
 
 
 resource "github_repository_collaborator" "softservedata" {
-  repository = "github-terraform-task-ipostnikov"
+  repository = var.repo_name
   username   = "softservedata"
 }
 
 
 resource "github_branch_default" "default_branch" {
-  repository = github.repository
+  repository = var.repo_name
   branch = "develop"
 }
