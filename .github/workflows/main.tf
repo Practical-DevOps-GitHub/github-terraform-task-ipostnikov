@@ -30,23 +30,20 @@ resource "github_branch_default" "default_branch" {
 resource "github_branch_protection" "main_protection" {
   repository = var.repo_name
   branch     = "main"
-
+  enforce_admins = true
   required_pull_request_reviews {
     dismiss_stale_reviews            = true
     require_code_owner_reviews       = true
   }
 
-  enforce_admins = true
+  
 }
 
 resource "github_branch_protection" "develop_protection" {
-
   repository = var.repo_name
   branch     = "develop"
-  
+  enforce_admins = true
   required_pull_request_reviews {
     required_approving_review_count  = 2
   }
-  enforce_admins = true
 }
-
