@@ -49,3 +49,4 @@ resource "github_branch_protection" "develop_protection" {
   }
   enforce_admins = true
 }
+
