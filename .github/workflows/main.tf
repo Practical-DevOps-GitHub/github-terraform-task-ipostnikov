@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "github" {
-  token = "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"
+  token = var.PAT
   owner = "Practical-DevOps-GitHub"
   repository = "github-terraform-task-ipostnikov"
 }
