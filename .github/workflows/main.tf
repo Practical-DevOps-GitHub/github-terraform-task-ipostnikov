@@ -14,21 +14,14 @@ provider "github" {
   repository = "github-terraform-task-ipostnikov"
 }
 
-resource "github_repository" "github-terraform-task-ipostnikov" {
-  name        = "github-terraform-task-ipostnikov"
-  visibility  = "private"
-}
 
-
-resource "github_repository_collaborator" "collaborator" {
+resource "github_repository_collaborator" "softservedata" {
   repository = "github-terraform-task-ipostnikov"
   username   = "softservedata"
-  permission = "push"
 }
 
 
 resource "github_branch_default" "default_branch" {
   repository = github.repository
   branch = "develop"
-
 }
