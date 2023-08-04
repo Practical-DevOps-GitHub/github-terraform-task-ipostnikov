@@ -8,15 +8,6 @@ terraform {
   }
 }
 
-variable "repo_name" {
-  default = "github-terraform-task-ipostnikov"
-}
-
-variable "org_name" {
-  default = "Practical-DevOps-GitHub"
-}
-
-
 provider "github" {
   token = var.PAT
   owner = var.org_name.default
@@ -40,9 +31,7 @@ resource "github_branch_protection" "main_protection" {
   required_pull_request_reviews {
     dismiss_stale_reviews            = true
     require_code_owner_reviews       = true
-  }
-
-  
+  }  
 }
 
 
