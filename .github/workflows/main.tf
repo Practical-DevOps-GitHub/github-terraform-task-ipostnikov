@@ -40,9 +40,11 @@ resource "github_branch_protection" "main_protection" {
 }
 
 resource "github_branch_protection" "develop_protection" {
+
   repository = var.repo_name
   branch     = "develop"
   enforce_admins = true
+  
   required_pull_request_reviews {
     required_approving_review_count  = 2
   }
