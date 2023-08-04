@@ -28,7 +28,6 @@ resource "github_repository_collaborator" "softservedata" {
   username   = "softservedata"
 }
 
-
 resource "github_branch_default" "default_branch" {
   repository = var.repo_name
   branch = "develop"
