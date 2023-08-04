@@ -23,7 +23,6 @@ provider "github" {
   repository = var.repo_name
 }
 
-
 resource "github_repository_collaborator" "softservedata" {
   repository = var.repo_name
   username   = "softservedata"
