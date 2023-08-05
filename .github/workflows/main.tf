@@ -10,17 +10,17 @@ terraform {
 
 #vars
 locals {
-  PAT = "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"
+  PAT = "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" #my_pat
   repo_name = "github-terraform-task-ipostnikov"
   
 }
-data "github_repository" "repo_name_id" {
-  full_name = "Practical-DevOps-GitHub/github-terraform-task-ipostnikov"
-}
+# data "github_repository" "repo_name_id" {
+#   full_name = "Practical-DevOps-GitHub/github-terraform-task-ipostnikov"
+# }
 
-output "repository_id" {
-  value = data.github_repository.repo_name_id.id
-}
+# output "repository_id" {
+#   value = data.github_repository.repo_name_id.id
+# }
 
 provider "github" {
   token = local.PAT
@@ -47,7 +47,7 @@ resource "github_branch_default" "defbranch" {
 
 resource "github_branch_protection" "develop_protection" {
 
-  repository_id = data.github_repository.repo_name_id.id
+  repository_id = local.repo_name
   pattern       = "develop"
   required_pull_request_reviews {
     required_approving_review_count = 2
@@ -112,5 +112,6 @@ resource "github_actions_secret" "PAT" {
   secret_name     = "PAT"
   plaintext_value = local.PAT
 }
+
 
 
