@@ -12,7 +12,7 @@ terraform {
 
 #vars
 locals {
-  PAT = "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" #my_pat
+  PAT = "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"
   repo_name = "github-terraform-task-ipostnikov"
   
 }
@@ -39,12 +39,14 @@ resource "github_repository_collaborator" "collaborator" {
 resource "github_branch" "develop" {
   repository = local.repo_name
   branch     = "develop"
+  source_branch = "main"
 }
 
 resource "github_branch_default" "defbranch" {
   #making develop branch as a default
   repository = local.repo_name
   branch     = "develop"
+  depends_on = [ github_branch.develop ]
 }
 
 resource "github_branch_protection" "develop_protection" {
@@ -63,7 +65,7 @@ resource "github_branch_protection" "main_protection" {
 
   required_pull_request_reviews {
     require_code_owner_reviews = true
-    required_approving_review_count = 1
+    # required_approving_review_count = 1
   }
 }
 
@@ -94,7 +96,7 @@ EOF
 resource "github_repository_deploy_key" "deploy_key" {
   title      = "DEPLOY_KEY"
   repository = local.repo_name
-  key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJr8ocXgTjWHOD5AfQZMfQ8Md+LvKyCeEUgqfkbzNepU postnikov@mail.com"
+  key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHxcV/I8wpuuX5mfN8wW02vZ+rcWb6oSF8YO3ESegytR ihor.postnikov@mail.com"
   read_only  = "false"
 }
 
