@@ -1,3 +1,4 @@
+#vars
 variable "repo_name" {
   default = "github-terraform-task-ipostnikov"
 }
