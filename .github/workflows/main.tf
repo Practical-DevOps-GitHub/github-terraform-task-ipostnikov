@@ -59,10 +59,10 @@ resource "github_branch_protection" "main_protection" {
   repository_id = local.repo_name
   pattern       = "main"
 
-  # required_pull_request_reviews {
-  #   require_code_owner_reviews = true
-  #   required_approving_review_count = 1
-  # }
+  required_pull_request_reviews {
+    require_code_owner_reviews = true
+    required_approving_review_count = 1
+  }
 }
 
 resource "github_repository_file" "soft_codeowner" {
