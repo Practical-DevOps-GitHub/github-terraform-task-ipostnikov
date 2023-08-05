@@ -56,24 +56,18 @@ resource "github_branch_protection" "develop_protection" {
 
 resource "github_branch_protection" "main_protection" {
   #main branch protection rule
-  repository_id = data.github_repository.repo_name_id.id
+  repository_id = local.repo_name
   pattern       = "main"
 
   required_pull_request_reviews {
-    dismiss_stale_reviews      = true
     require_code_owner_reviews = true
+    required_approving_review_count = 1
   }
 }
 
-variable "branches" {
-  type    = list(string)
-  default = ["develop", "main"]
-}
-
 resource "github_repository_file" "soft_codeowner" {
-  for_each   = toset(var.branches)
   repository = local.repo_name
-  branch     = each.key
+  branch     = "main"
   content    = "* @softservedata"
   file       = "CODEOWNERS"
 }
