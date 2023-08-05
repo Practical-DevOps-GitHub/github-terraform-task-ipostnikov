@@ -8,26 +8,40 @@ terraform {
   }
 }
 
+#vars
+locals {
+  PAT = "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"
+  repo_name = "github-terraform-task-ipostnikov"
+  
+}
+data "github_repository" "repo_name_id" {
+  full_name = "Practical-DevOps-GitHub/github-terraform-task"
+}
+
+output "repository_id" {
+  value = data.github_repository.repo_name_id.id
+}
+
 provider "github" {
-  token = var.PAT
+  token = local.PAT
   owner = "Practical-DevOps-GitHub"
 }
 
 
 resource "github_repository_collaborator" "collaborator" {
   #adding collaborator softservedata to repository
-  repository = var.repo_name
+  repository = local.repo_name
   username   = "softservedata"
 }
 
 resource "github_branch" "develop" {
-  repository = var.repo_name
+  repository = local.repo_name
   branch     = "develop"
 }
 
 resource "github_branch_default" "defbranch" {
   #making develop branch as a default
-  repository = var.repo_name
+  repository = local.repo_name
   branch     = github_branch.develop.branch
 }
 
@@ -52,14 +66,14 @@ resource "github_branch_protection" "main_protection" {
 }
 
 resource "github_repository_file" "soft_codeowner" {
-  repository = var.repo_name
+  repository = local.repo_name
   branch     = "develop"
   content    = "* @softservedata"
   file       = "CODEOWNERS"
 }
 
 resource "github_repository_file" "pull_request_file" {
-  repository = var.repo_name
+  repository = local.repo_name
   file       = ".github/pull_request_template.md"
   content    = <<EOF
       ## Describe your changes
@@ -76,13 +90,13 @@ EOF
 
 resource "github_repository_deploy_key" "deploy_key" {
   title      = "DEPLOY_KEY"
-  repository = var.repo_name
+  repository = local.repo_name
   key        = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJr8ocXgTjWHOD5AfQZMfQ8Md+LvKyCeEUgqfkbzNepU postnikov@mail.com"
   read_only  = "false"
 }
 
 resource "github_repository_webhook" "discord_webhook" {
-  repository = var.repo_name
+  repository = local.repo_name
   events     = ["pull_request"]
 
   configuration {
@@ -93,9 +107,9 @@ resource "github_repository_webhook" "discord_webhook" {
 }
 
 resource "github_actions_secret" "PAT" {
-  repository      = var.repo_name
+  repository      = local.repo_name
   secret_name     = "PAT"
-  plaintext_value = var.PAT
+  plaintext_value = local.PAT
 }
 
 
