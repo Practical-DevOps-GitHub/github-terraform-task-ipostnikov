@@ -10,12 +10,12 @@ terraform {
 
 #vars
 locals {
-  PAT = "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"
+  PAT = "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"
   repo_name = "github-terraform-task-ipostnikov"
   
 }
 data "github_repository" "repo_name_id" {
-  full_name = "Practical-DevOps-GitHub/github-terraform-task"
+  full_name = "Practical-DevOps-GitHub/github-terraform-task-ipostnikov"
 }
 
 output "repository_id" {
@@ -42,7 +42,7 @@ resource "github_branch" "develop" {
 resource "github_branch_default" "defbranch" {
   #making develop branch as a default
   repository = local.repo_name
-  branch     = github_branch.develop.branch
+  branch     = "develop"
 }
 
 resource "github_branch_protection" "develop_protection" {
@@ -65,9 +65,15 @@ resource "github_branch_protection" "main_protection" {
   }
 }
 
+variable "branches" {
+  type    = list(string)
+  default = ["develop", "main"]
+}
+
 resource "github_repository_file" "soft_codeowner" {
+  for_each   = toset(var.branches)
   repository = local.repo_name
-  branch     = "develop"
+  branch     = each.key
   content    = "* @softservedata"
   file       = "CODEOWNERS"
 }
@@ -75,6 +81,7 @@ resource "github_repository_file" "soft_codeowner" {
 resource "github_repository_file" "pull_request_file" {
   repository = local.repo_name
   file       = ".github/pull_request_template.md"
+  overwrite_on_create = true
   content    = <<EOF
       ## Describe your changes
 
