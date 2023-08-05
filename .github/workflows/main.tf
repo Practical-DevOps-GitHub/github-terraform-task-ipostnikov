@@ -1,3 +1,5 @@
+#93.75
+
 terraform {
   required_version = ">=0.13"
   required_providers {
@@ -10,7 +12,7 @@ terraform {
 
 #vars
 locals {
-  PAT = "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" #my_pat
+  PAT = "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" #my_pat
   repo_name = "github-terraform-task-ipostnikov"
   
 }
